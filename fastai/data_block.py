@@ -315,7 +315,7 @@ class ItemList:
                 n = o.relative_to(self.path).parts[0]
             else:
                 n = o.split(os.path.sep)[len(str(self.path).split(os.path.sep))]
-            if include and not n in include:
+            if include and n not in include:
                 return False
             if exclude and n in exclude:
                 return False
@@ -444,9 +444,9 @@ class ItemList:
             return MultiCategoryList
         try:
             it = index_row(labels, 0)
-        except:
+        except BaseException:
             raise Exception(
-                """Can't infer the type of your targets. 
+                """Can't infer the type of your targets.
 It's either because your data source is empty or because your labelling function raised an error."""
             )
         if isinstance(it, (float, np.float32)):
@@ -660,8 +660,7 @@ class MultiCategoryProcessor(CategoryProcessor):
         classes = set()
         for c in items:
             classes = classes.union(set(c))
-        classes = list(classes)
-        classes.sort()
+        classes = sorted(classes)
         return classes
 
 
