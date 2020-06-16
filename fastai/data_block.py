@@ -263,7 +263,7 @@ class ItemList():
         if self.label_cls is not None:          return self.label_cls
         if label_delim is not None:             return MultiCategoryList
         try: it = index_row(labels,0)
-        except: raise Exception("""Can't infer the type of your targets. 
+        except: raise BaseException("""Can't infer the type of your targets. 
 It's either because your data source is empty or because your labelling function raised an error.""")
         if isinstance(it, (float, np.float32)): return FloatList
         if isinstance(try_int(it), (str, Integral)):  return CategoryList
@@ -405,8 +405,7 @@ class MultiCategoryProcessor(CategoryProcessor):
         "Generate classes from `items` by taking the sorted unique values."
         classes = set()
         for c in items: classes = classes.union(set(c))
-        classes = list(classes)
-        classes.sort()
+        classes = sorted(classes)
         return classes
 
 class MultiCategoryList(CategoryListBase):
